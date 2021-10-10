@@ -116,8 +116,8 @@ local function get_repos()
 
       local dirname = repo.alt_name or repo.sub_dir:match("^.*/(.*)$")
       repo.dest = ("%s%s/%s"):format(home, repos.config.destination, repo.sub_dir)
-      repo.sym_dest = ("%s%s/%s/%s"):format(home, repos.config.symlink_destination, reldest, dirname)
-
+      --repo.sym_dest = ("%s%s/%s/%s"):format(home, repos.config.symlink_destination, reldest, dirname)
+      repo.sym_dest = ("%s/%s"):format(reldest, dirname)
       table.insert(all_repos_in_file, repo)
     end
   end

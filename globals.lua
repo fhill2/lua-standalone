@@ -1,11 +1,17 @@
 --local globals = {}
 
 inspect = require("inspect")
-rawprint = print
 print = function(t) rawprint(inspect(t)) end
 uv = require"luv"
 home = uv.os_homedir()
 mode = uv.fs_stat(home).mode
+cl = home .. "/cl"
+
+dev = home .. "/dev"
+dev_cl = dev .. "/cl"
+old = dev_cl .. "/old"
+dot = dev_cl .. "/dot"
+
 --ansicolors = require"lib.ansicolors" 
 
 

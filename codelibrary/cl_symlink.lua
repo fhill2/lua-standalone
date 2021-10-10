@@ -1,7 +1,7 @@
 local symlinks = require"codelibrary.data.symlinks"
 local repos = require"codelibrary.data.repos"
-local dest = home .. repos.config.destination
-local sym_dest = home .. repos.config.symlink_destination
+--local dest = home .. repos.config.destination
+--local sym_dest = home .. repos.config.symlink_destination
 
 
 local util = require"codelibrary.util"

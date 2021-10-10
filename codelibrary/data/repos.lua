@@ -3,7 +3,7 @@ local M = {}
 
 M.config = {
     destination = "/repos",
-    symlink_destination = "/cl",
+    --symlink_destination = "/cl",
   }
 
 -- dl_location = "home/f1/repos"
@@ -15,14 +15,14 @@ M.repos = {
       "https://github.com/jarun/nnn",
       "https://github.com/kovidgoyal/kitty",
     }, 
-     "shell/repos" 
+     cl .. "/shell/repos" 
    },
 
     kittens_builtin = {
       {
         { "https://github.com/kovidgoyal/kitty/tree/master/kittens", "builtin" },
       }, 
-      "python/kitten" ,
+      cl .. "/python/kitten" ,
     },
     kittens_ex = {{
      "https://github.com/GermainZ/kitty-weechat-hints",
@@ -31,7 +31,7 @@ M.repos = {
      "https://github.com/adi1090x/kitty-cat",
      "https://github.com/yurikhan/kitty-smart-scroll",
 "https://github.com/nerdrew/kittens/blob/master/password.py",
-    }, "python/kitten/ex" },
+    }, cl .. "/python/kitten/ex" },
 
     dotfiles_nix = {
       {
@@ -43,7 +43,7 @@ M.repos = {
         { "https://github.com/MoleTrooper/dotfiles", "moletrooper" },
         { "https://github.com/elianiva/dotfiles", "elianiva" },
       },
-      "dot/nix",
+      cl .. "/dot/nix",
     },
 
     dotfiles_lua = {
@@ -53,10 +53,10 @@ M.repos = {
         { "https://github.com/LunarVim/LunarVim", "lunarvim" },
         { "https://github.com/NvChad/NvChad", "nvchad" },
       },
-      "dot/lua",
+      cl .. "/dot/lua",
     },
 
-    dotfiles_shell = { { "https://github.com/junegunn/dotfiles", "junegunn" }, "dot/shell" },
+    dotfiles_shell = { { "https://github.com/junegunn/dotfiles", "junegunn" }, cl .. "dot/shell" },
 
     lua_telescope_extensions = {
       {
@@ -88,27 +88,36 @@ M.repos = {
         "https://github.com/fannheyward/telescope-coc.nvim",
         "https://github.com/dhruvmanila/telescope-bookmarks.nvim",
       },
-      "lua/repos/telescope/extensions",
+      cl .. "/lua/repos/telescope/extensions",
     },
 
     lua_telescope = { {
       "https://github.com/nvim-telescope/telescope.nvim",
-    }, "lua/repos/telescope" },
+    }, cl .. "/lua/repos/telescope" },
+    awesome_modules = { {
+       "https://github.com/Elv13/awesome-1/tree/doc_tests_and_notif/lib/dynamite",
+       "https://github.com/Elv13/collision",
+       "https://github.com/Elv13/tyrannical",
+       "https://github.com/Elv13/repetitive",
+       "https://github.com/Elv13/radical",
+    }, home .. "/.config/awesome" },
+
 
     lua_awesome = { {
       "https://github.com/streetturtle/awesome-wm-widgets",
       "https://github.com/awesomeWM/awesome",
-    }, "lua/repos/awesome" },
+      "https://github.com/Elv13/awesome-1",
+    }, cl .. "/lua/repos/awesome" },
     nix = { {
       { "https://github.com/NixOS/nixpkgs", "nixpkgs" },
-    }, "nix/repos" },
+    }, cl .. "/nix/repos" },
     python = {
       {
         { "https://github.com/ghill2/pytower_proj", "pytower" },
         { "https://github.com/polygon-io/client-python", "polygon-client-library" },
         { "https://github.com/polygon-io/client-examples", "polygon-examples" },
       },
-      "python/repos",
+      cl .. "/python/repos",
     },
   }
 
