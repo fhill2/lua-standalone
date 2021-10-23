@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/25864833/tampermonkey-ignores-exclude

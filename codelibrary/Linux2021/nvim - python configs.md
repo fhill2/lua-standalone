@@ -1,0 +1,1 @@
+https://www.google.com/search?q=nvim+python+setup&oq=nvim+python+setup&aqs=chrome..69i57j0i22i30l3.7655j0j7&sourceid=chrome&ie=UTF-8

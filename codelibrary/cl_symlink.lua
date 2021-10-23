@@ -20,7 +20,7 @@ print("rm " .. cl_path)
 print("mkdir " .. cl_path)
 
 -- create non symlinked folders first
-for _, dir in ipairs(symlinks.dir) do
+for _, dir in ipairs(symlinks.cl_dir) do
   util.create_fp_dirs(dir)
 end
 -- create download.lua symlinks -->  ~/cl
@@ -37,7 +37,7 @@ for _, sym in ipairs(repos.repos) do
 end
 
 -- create ~/dev/cl syms
-for _, sym in ipairs(symlinks.sym) do
+for _, sym in ipairs(symlinks.cl) do
   -- if not sym[1] or not sym[2] then
   --   print("specify arg1: source arg2: dest minimum")
   --   os.exit()

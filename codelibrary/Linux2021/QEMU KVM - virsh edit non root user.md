@@ -1,0 +1,2 @@
+https://www.reddit.com/r/VFIO/comments/6dadeh/cant_save_changes_made_using_virsh_edit/
+`virsh` makes a temporary copy of the xml file and only saves it over the original if it passes a verification check. You should get output after exiting nano whether it passed verification or not something like the following on success.

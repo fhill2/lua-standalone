@@ -11,6 +11,15 @@ local colors = require"lib.ansicolors"
 local util = require"codelibrary.util"
 
 local function create_symlink(sym)
+
+ if sym.replace then
+   print("GOT HERE")
+   util.mkdir("/tmp/symlinks")
+
+   local moved_filepath = ("/tmp/symlinks/%s-%s"):format(sym.dest:match".*/(.*)$", os.date("%d-%m-%Y"))
+   if uv.fs_stat(sym.dest) then uv.fs_rename(sym.dest, moved_filepath) end
+ end
+
   util.create_fp_dirs(sym.dest_parent)
   if not uv.fs_stat(sym.dest) then
     -- fs_symlink still creates a symlink if source doesnt exist
@@ -95,6 +104,9 @@ function M.ln(arg)
       sym.recurse_ignore = arg[4]
     end
   end
+
+  sym.replace = false
+  if arg[5] then sym.replace = true end
 
   if not sym.recurse then
     sym.dest_parent = sym.dest:match("^(.*)/")

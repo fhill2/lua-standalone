@@ -1,21 +1,23 @@
 local home = os.getenv("HOME")
---local dev = home .. "/dev"
---local dot = dev .. "/dot"
---local cl = home .. "/cl"
 local config = dot .. "/home-manager/config"
+local bin = home .. "/bin"
+
 -- these have to be absolute paths
 return {
-  dir = {
+  cl_dir = {
     cl .. "/lua",
     cl .. "/nix",
     cl .. "/python",
   },
-  sym = {
- -- from nix
+  cl = {
+     -- from nix, after download repos
    {config .. "/kitty", home .. "/.config/kitty"},
    {config .. "/xplr/init.lua", home .. "/.config/xplr/init.lua"},
    {config .. "/awesome", home .. "/.config/awesome"},
    {config .. "/misc/starship.toml", home .. "/.config/starship.toml"},
+   {config .. "/qtile", home .. "/.config/qtile"},
+   {config .. "/dunst", home .. "/.config/dunst"},
+
    { "/run/current-system/sw/share/awesome", cl .. "/lua/awesome/awesome-nix-current-install"},
     -- all ~/dev/cl
     { dev .. "/cl/format", cl .. "/format" },
@@ -24,6 +26,7 @@ return {
     { dev .. "/cl/lua/tuts", cl .. "/lua/tuts" },
     { dev .. "/cl/old", cl .. "/old" },
     { dev .. "/cl/shell", cl .. "/shell", "recurse", { "AANotusingAnymore" } },
+    { dev .. "/cl/lua/standalone", cl .. "/lua/standalone"},
     
     
     { dev .. "/cl/python", cl .. "/python", "recurse", {"kitten-me"} },
@@ -45,7 +48,14 @@ return {
     { dev .. "/cl/python/kitten-me", home .. "/.config/kitty/kitten/me" },
     { home .. "/repos/shell/kitty_kittens", home .. "/.config/kitty/kitten/builtin"},
 
-  
+    -- after everything symlinked, create ~/bin
+    { config .. "/kitty/kitty-save-session.py", home .. "/bin/kitty-save-session.py" },
+    { dev_cl .. "/lua/standalone/bin", home .. "/bin", "recurse" },
+    { config .. "/qtile/xephyr", home .. "/bin/qtile-xephyr"},
+  },
+  post = {
+    -- [5]=true will move destination if it exists to /tmp/symlinks
+   {config .. "/nvim/profiles.lua", home .. "/.config/nvim/profiles.lua", nil, nil, true},
   },
 }
 

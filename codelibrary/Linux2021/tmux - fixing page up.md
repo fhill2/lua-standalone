@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/28769725/page-up-page-down-dont-work-in-tmux-when-sshed-from-mac

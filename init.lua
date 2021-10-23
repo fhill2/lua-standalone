@@ -2,23 +2,28 @@
 
 
 -- standalone package paths = awesome + standalone package paths
-local handle = io.popen([[awesome-client 'return package.path']])
-local awesome_path = handle:read "*a"
-local awesome_path = awesome_path:match("string%s(.*)"):sub(2):sub(1, -4)
-handle:close()
-package.path = package.path .. ";" .. awesome_path
+-- local handle = io.popen([[awesome-client 'return package.path']])
+-- local awesome_path = handle:read "*a"
+-- local awesome_path = awesome_path:match("string%s(.*)"):sub(2):sub(1, -4)
+-- handle:close()
+-- package.path = package.path .. ";" .. awesome_path
 
-local handle = io.popen([[awesome-client 'return package.cpath']])
-local awesome_cpath = handle:read "*a"
-local awesome_cpath = awesome_cpath:match("string%s(.*)"):sub(2):sub(1, -3)
-handle:close()
-package.cpath = package.cpath .. ";" .. awesome_cpath
+-- local handle = io.popen([[awesome-client 'return package.cpath']])
+-- local awesome_cpath = handle:read "*a"
+-- local awesome_cpath = awesome_cpath:match("string%s(.*)"):sub(2):sub(1, -3)
+-- handle:close()
+-- package.cpath = package.cpath .. ";" .. awesome_cpath
 
 
 
-local inspect = require("inspect")
+inspect = require("lib.inspect")
 --local rawprint = print
-dump = function(t) print(inspect(t)) end
+dump = function(t)
+local debug = debug.getinfo(2)
+local pre = ("%s:%s"):format(debug.short_src, debug.currentline)
+  print(pre, inspect(t)) end
+
+
 uv = require"luv"
 home = uv.os_homedir()
 mode = uv.fs_stat(home).mode
@@ -30,7 +35,7 @@ cl = home .. "/cl"
 dev = home .. "/dev"
 dev_cl = dev .. "/cl"
 old = dev_cl .. "/old"
-dot = dev_cl .. "/dot"
+dot = dev .. "/dot"
 
 
 

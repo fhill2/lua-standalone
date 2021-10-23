@@ -10,7 +10,37 @@ function util.mkdir(dir)
   end
 end
 
+function util.create_file(opts)
+  local opts = opts or {}
+  if uv.fs_access(opts.dest, "r") == false then
+  uv.fs_open(
+    opts.dest,
+    "w",
+    420,
+    function(err, fd)
+      if err then
+        print(err)
+      else
+        if not opts.silent then print(opts.dest .. " - successfully created") end
+        uv.fs_close(fd)
+      end
+    end
+  )
+end
+end
+
+
+function util.read_file_sync(path)
+  local fd = assert(uv.fs_open(path, "r", 438))
+  local stat = assert(uv.fs_fstat(fd))
+  local data = assert(uv.fs_read(fd, stat.size, 0))
+  assert(uv.fs_close(fd))
+  return data
+end
+
+
 function util.remove_dir(cwd)
+  if not uv.fs_stat(cwd) then return end
   local handle = uv.fs_scandir(cwd)
   if type(handle) == "string" then
     -- return api.nvim_err_writeln(handle)

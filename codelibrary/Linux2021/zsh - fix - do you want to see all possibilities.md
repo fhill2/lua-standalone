@@ -1,0 +1,1 @@
+https://www.reddit.com/r/zsh/comments/gor76p/zsh_do_you_whish_to_see_all_possibilities_how_to/

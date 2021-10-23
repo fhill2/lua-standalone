@@ -81,10 +81,11 @@ local function get_repos()
         repo.user_name = url_orig:match("github.com/(.*)$")
         repo.url = url_orig
       elseif is_github_url and is_partial then
-        if url_orig:match("/tree/master/") == nil then
-          print("partial URLs must be tree/master")
-          os.exit()
-        end
+        
+        --if url_orig:match("/tree/master/") == nil then
+        --  print("partial URLs must be tree/master")
+        --  os.exit()
+        --end
 
         repo.partial = true
 
@@ -92,7 +93,16 @@ local function get_repos()
         repo.partial_path = url_orig:match("/tree/master/(.*)$")
 
         repo.sub_dir = ("%s/%s"):format(group, repo.alt_name or url_orig:match("^.*/(.*)$"))
+        if vv[3] then 
+          -- to fix bug where if trunk isnt named master then svn cant download it
+          -- best solution would be getting master branch info through gh cli
+        repo.url = url_orig:gsub("/tree/.-/", vv[3])
+        elseif not vv[3] and url_orig:match("/tree/master/") then 
         repo.url = url_orig:gsub("/tree/master/", "/trunk/")
+        elseif not vv[3] then
+        repo.url = url_orig:gsub("/tree/", "/branches/")
+        end
+        
 
         local svn_arg = ("%s checkout %s"):format(nix_svn, repo.url)
         if repo.alt_name then

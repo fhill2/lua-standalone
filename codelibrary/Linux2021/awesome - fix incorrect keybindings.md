@@ -1,0 +1,1 @@
+https://askubuntu.com/questions/137172/how-to-remap-superleft-key-to-control-key
