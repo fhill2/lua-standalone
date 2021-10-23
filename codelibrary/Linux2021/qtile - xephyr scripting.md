@@ -1,1 +1,0 @@
-http://docs.qtile.org/en/latest/manual/hacking.html?highlight=nested#using-xephyr

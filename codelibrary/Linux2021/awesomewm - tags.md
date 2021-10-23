@@ -1,2 +1,0 @@
-https://www.reddit.com/r/awesomewm/comments/peb1vp/is_there_a_way_restart_awesome_then_goto_first_no/
-https://www.reddit.com/r/awesomewm/comments/k3wkb2/how_can_i_stop_extra_startup_background_programs/

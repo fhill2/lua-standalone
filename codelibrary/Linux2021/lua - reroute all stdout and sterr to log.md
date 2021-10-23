@@ -1,1 +1,0 @@
-https://stackoverflow.com/questions/11885895/send-lua-output-to-non-stdout

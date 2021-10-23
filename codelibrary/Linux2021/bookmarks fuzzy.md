@@ -1,1 +1,0 @@
-https://www.google.com/search?q=fzf+open+bookmarks&oq=fzf+open+bookmarks&aqs=chrome..69i57.1811j0j4&sourceid=chrome&ie=UTF-8

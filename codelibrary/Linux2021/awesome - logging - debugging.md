@@ -1,1 +1,0 @@
-https://github.com/awesomeWM/awesome/blob/master/docs/90-FAQ.md

@@ -1,2 +1,0 @@
-https://blog.tred.com/how-to-sell-your-car-in-california/
-It’s also a good idea to submit the Release of Liability—the part you, as the seller, need to tear off and file with the DMV within 5 days of the sale—online, at [www.dmv.ca.gov](http://www.dmv.ca.gov/). Print the confirmation when you’re done so that you have proof that you filed the transfer.

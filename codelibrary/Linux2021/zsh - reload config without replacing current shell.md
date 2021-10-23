@@ -1,1 +1,0 @@
-https://stackoverflow.com/questions/36668910/how-do-i-reload-zsh-config-files-without-replacing-the-current-shell

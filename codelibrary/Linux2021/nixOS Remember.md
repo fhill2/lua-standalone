@@ -1,1 +1,0 @@
-nix flake check <-- runs build but only checks

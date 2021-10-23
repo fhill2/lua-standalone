@@ -1,1 +1,0 @@
-https://www.google.com/search?q=linux+standalone+alt+tab&oq=linux+standalone+alt+tab&aqs=chrome..69i57j33i22i29i30l4.2540j0j7&sourceid=chrome&ie=UTF-8

@@ -1,1 +1,0 @@
-https://github.com/nvim-neorg/neorg/wiki/Installation
