@@ -3,7 +3,7 @@ local err = require("codelibrary.dircolors.util").err
 local err_exit = require("codelibrary.dircolors.util").err_exit
 local self_map = require("codelibrary.dircolors.util").self_map
 
-local github = lookup.github() -- <-- NON 256 ext = hex- all github languages
+--local github = lookup.github() -- <-- NON 256 ext = hex- all github languages
 --local name_id = lookup.name_id() -- <-- 256 name = id
 
 local M = {}
@@ -44,8 +44,7 @@ local function rgb2hex(self)
   return self
 end
 
-
-local function round_hex_to_256(hex)
+local function unrounded_hex_to_rounded_id(hex)
   -- cba to do in luv
   local handle = io.popen("python3 /home/f1/dev/cl/lua/standalone/codelibrary/dircolors/rgb256.py '" .. hex:gsub("#", "") .. "'")
   local rounded_hex = handle:read("*a")
@@ -54,100 +53,59 @@ local function round_hex_to_256(hex)
   return tonumber(rounded_hex)
 end
 
-local all_extensions = {}
-all_extensions.ext = { rounded = {}, unrounded = {}}
-all_extensions.file = { rounded = {}, unrounded = {}}
-
-
-local parsers = {}
-parsers.hex_rgb = {}
-parsers.github = {}
---parsers.name = {}
-
+local output = {
+  dircolors = { ext = {}, file = {} }, --  [k] ext --> [v] rounded id
+  xplr = { ext = {}, file = {} }, -- [k] ext --> [v] unrounded hex
+  kitty = {}, -- [k] id --> [v] unrounded hex
+}
 
 -- all parsers called once on every item on file or ext table, so dont iterate
-parsers.hex_rgb.ext = function(self, ext)
-  all_extensions.ext.rounded[ext] = round_hex_to_256(self.color)
-  all_extensions.ext.unrounded[ext] = self.color
-end
-parsers.hex_rgb.file = function(self, file)
-  all_extensions.file.rounded[file] = round_hex_to_256(self.color)
-  all_extensions.file.unrounded[file] = self.color
-end
 
-parsers.github.ext = function(self, ext)
-  local github_hex = github[ext]
-
-  if github_hex then
-    all_extensions.ext.rounded[ext] = round_hex_to_256(github_hex)
-    all_extensions.ext.unrounded[ext] = github_hex
-  elseif not github_hex and self.fallback then
-    err(self, ("no github color for: %s - manual fallback ext applied: %s"):format(ext, self.fallback))
-    all_extensions.ext.rounded[ext] = round_hex_to_256(github[self.fallback])
-    all_extensions.ext.unrounded[ext] = github[self.fallback]
-
+local function parse_kitty(self)
+  if output.kitty[self.id] then
+    err_exit(self, ": duplicate rounded ID found - TOFIX")
   else
-    err(self, ("no github color for: %s - auto fallback ext applied: %s"):format(ext, self.ext[1]))
+    output.kitty[self.id] = self.hex_unrounded
   end
 end
-parsers.github.file = function(self, file)
-  err_exit(self, "color = github, with file = {} not supported")
+
+local function parse_dircolors_xplr(self)
+  if self.ext then
+    for _, ext in ipairs(self.ext) do
+      output.dircolors.ext[ext] = self.id
+      output.xplr.ext[ext] = self.hex_unrounded
+    end
+  end
+
+  if self.file then
+    for _, file in ipairs(self.file) do
+      output.dircolors.ext[file] = self.id
+      output.xplr.file[file] = self.hex_unrounded
+    end
+  end
 end
-
--- taken out as I cant specify full rgb color for xplr if I use these parsers
--- parsers.name.ext = function(self, ext)
---   local id = name_id[self.color:lower()]
---   if id then
---     all_extensions.ext.rounded[ext] = id
---   else
---     err_exit(self, self.color .. " - doesnt exist in name --> id table")
---   end
--- end
-
--- parsers.name.file = function(self, file)
---   local id = name_id[self.color:lower()]
---   if id then
---     all_extensions.file.rounded[file] = id
---   else
---     err_exit(self, self.color .. " - doesnt exist in name --> id table")
---   end
--- end
-
 
 function M.parse(config)
   for _, v in ipairs(config) do
-    -- modes:
-    -- github <-- retrieve extension color from languages.yml linguist github
-    -- rgb <-- gets rounded to 256 range on dircolors export, xplr is left alone
-    -- hex <-- gets converted to rgb, and rgb is used for that extension in the script
-    -- name <-- from 256 json name list
-    -- hex always gets converted to rgb because of copy pasta rounded 256 rgb fn
+    --or (v.color == "github" and "github")
 
-
-    local parser = (v.color:match("^#") and "hex") or (v.color:match(",") and "rgb") or (v.color == "github" and "github") or "error"
-    if parser == "error" then err_exit(v, "no parser matched on string: " .. v.color) end
-
-    ------ main parser -------
-    -- check if key/ext exists already
-    for _, ext in ipairs(v.ext) do
-      if all_extensions[ext] then
-        err_exit(v, "duplicate extension in config - ." .. ext)
-      end
+    local is_hex = (v.color:match("^#") and true) or (v.color:match(",") and false) or nil
+    if is_hex == nil then
+      err_exit(v, v.color .. ": no rgb or hex formatting")
     end
 
-    if parser == "rgb" then
+    if not is_hex then
       v.color = rgb2hex(v)
     end
+    v.hex_unrounded = v.color
 
-    if parser == "hex" or parser == "rgb" then
-      parser = "hex_rgb"
-    end
-    -- main loop
-    if v.ext then self_map(v, v.ext, parsers[parser].ext) end
-    if v.file then self_map(v, v.file, parsers[parser].file) end
+    -- id to hex
+    v.id = unrounded_hex_to_rounded_id(v.hex_unrounded)
+    ------ main parser -------
+    parse_dircolors_xplr(v)
+    parse_kitty(v)
   end
-
-  return all_extensions
+    return output
 end
 
 return M

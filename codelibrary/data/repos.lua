@@ -1,7 +1,7 @@
 local M = {}
 
 M.config = {
-  destination = "/repos",
+  destination = home .. "/repos",
   --symlink_destination = "/cl",
 }
 
@@ -113,13 +113,19 @@ M.repos = {
       { "https://github.com/polygon-io/client-python", "polygon-client-library" },
       { "https://github.com/polygon-io/client-examples", "polygon-examples" },
       "https://github.com/qtile/qtile-examples",
-      "https://github.com/qtile/qtile",
+      --"https://github.com/qtile/qtile", -- using qtile from install python lib
     },
     cl .. "/python/repos",
   },
   -- NON CL
   --
   -- software
+  
+  -- bin files inside these are symlinked with post table in symlink.lua
+  bin = {
+    { "https://github.com/Sidmaz666/qtile-rofi-keybindings" },
+      nil,   
+  },
   awesome_modules = {
     {
       { "https://github.com/Elv13/awesome-1/tree/doc_tests_and_notif/lib/dynamite", _, "/trunk/" },

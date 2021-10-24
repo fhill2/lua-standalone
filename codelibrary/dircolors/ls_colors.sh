@@ -122,8 +122,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 *known_hosts          1
 .ini                  1
 .plist                1
-# vim
-.viminfo              1
 # cisco VPN client configuration
 .pcf                  1
 # adobe photoshop proof settings file
@@ -146,16 +144,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .rstheme              1
 # eclipse
 .epf                  1
-# shell
-.vim                  38;5;172
 # interpreted
 .ahk                  38;5;41
-# python
-.py                   38;5;41
-.ipynb                38;5;41
-# ruby
-.rb                   38;5;41
-.gemspec              38;5;41
 # perl
 .pl                   38;5;208
 .PL                   38;5;160
@@ -198,8 +188,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .m                    38;5;110
 # Crystal
 .cr                   38;5;81
-# Google golang
-.go                   38;5;81
 # fortran
 .f                    38;5;81
 .F                    38;5;81
@@ -219,8 +207,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 # pascal
 .s                    38;5;110
 .S                    38;5;110
-# Rust
-.rs                   38;5;81
 # AppleScript
 .scpt                 38;5;219
 # Swift
@@ -246,22 +232,11 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .zig                  38;5;81
 # V
 .v                    38;5;81
-# Python
-.pyc                  38;5;240
 # }}}
 # orchestration {{{2
 .tf                   38;5;168
 .tfstate              38;5;168
 .tfvars               38;5;168
-# java {{{2
-.coffee               38;5;074;1
-.java                 38;5;074;1
-.mjs                  38;5;074;1
-.jsm                  38;5;074;1
-.jsp                  38;5;074;1
-# }}}
-# php {{{2
-.php                  38;5;81
 # CakePHP view scripts and helpers
 .ctp                  38;5;81
 # Twig template engine
@@ -411,7 +386,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .allow                38;5;112
 .deny                 38;5;196
 # }}}
-# systemd {{{1
+# systemd {{{1{{{
 # http://www.freedesktop.org/software/systemd/man/systemd.unit.html
 .service              38;5;45
 *@.service            38;5;45
@@ -424,7 +399,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .path                 38;5;45
 .timer                38;5;45
 .snapshot             38;5;45
-# }}}
+# }}}}}}
 # metadata {{{1
 .application          38;5;116
 .cue                  38;5;116

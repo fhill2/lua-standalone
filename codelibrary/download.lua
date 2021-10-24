@@ -6,12 +6,12 @@ local util = require"codelibrary.util"
 
 local colors = require"lib.ansicolors"
 local ln = require"codelibrary.ln".ln
-util.mkdir(home .. repos.config.destination)
+util.mkdir(repos.config.destination)
 
 local function get_fs()
   local scan = require("plenary.scandir")
   local fs_orig = {}
-  scan.scan_dir(home .. repos.config.destination, {
+  scan.scan_dir(repos.config.destination, {
     only_dirs = true,
     depth = 1,
     on_insert = function(dir)
@@ -34,12 +34,12 @@ local function get_repos()
 
 
     local reldest
-    if not v[2] then 
-      print(colors("%{bright red}group is missing destination: " .. group))
-      os.exit()
-       else
-    reldest = v[2]
-       end
+    --if not v[2] then 
+    --  print(colors("%{bright red}group is missing destination: " .. group))
+    --  os.exit()
+    --   else
+    if v[2] then reldest = v[2] end
+    --   end
     for _, vv in ipairs(v[1]) do
       local repo = {
         -- url final URL that goes to git clone command
@@ -53,7 +53,7 @@ local function get_repos()
         -- dest <-- download repo location
         -- sym_dest <-- after downloaded to dest, dest gets symlinked to sym_dest
         args = { "-c" }, -- generated from url alt_name and partial
-        dest = dest,
+        --dest = dest,
       }
 
 
@@ -125,9 +125,9 @@ local function get_repos()
       end
 
       local dirname = repo.alt_name or repo.sub_dir:match("^.*/(.*)$")
-      repo.dest = ("%s%s/%s"):format(home, repos.config.destination, repo.sub_dir)
+      repo.dest = ("%s/%s"):format(repos.config.destination, repo.sub_dir)
       --repo.sym_dest = ("%s%s/%s/%s"):format(home, repos.config.symlink_destination, reldest, dirname)
-      repo.sym_dest = ("%s/%s"):format(reldest, dirname)
+      if reldest then repo.sym_dest = ("%s/%s"):format(reldest, dirname) end
       table.insert(all_repos_in_file, repo)
     end
   end
@@ -274,7 +274,7 @@ cleanup()
 download_prepare()
 
 for _, repo in ipairs(not_in_fs) do
-local cwd = ("%s%s/%s"):format(home, repos.config.destination, repo.group)
+local cwd = ("%s/%s"):format(repos.config.destination, repo.group)
   local opts = {
     repo = repo,
     cmd = nix_zsh,
@@ -294,5 +294,7 @@ repeat
 until uv.run() == false
 
 for _, repo in ipairs(repo_orig) do
+if repo.sym_dest then
 ln({ repo.dest, repo.sym_dest})
+end
 end

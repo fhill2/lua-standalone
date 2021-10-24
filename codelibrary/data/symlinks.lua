@@ -1,7 +1,7 @@
 local home = os.getenv("HOME")
 local config = dot .. "/home-manager/config"
 local bin = home .. "/bin"
-
+local repos = require"codelibrary.data.repos".config.destination
 -- these have to be absolute paths
 return {
   cl_dir = {
@@ -27,6 +27,7 @@ return {
     { dev .. "/cl/old", cl .. "/old" },
     { dev .. "/cl/shell", cl .. "/shell", "recurse", { "AANotusingAnymore" } },
     { dev .. "/cl/lua/standalone", cl .. "/lua/standalone"},
+    { "/run/current-system/sw/lib/python3.9/site-packages", cl .. "/python/site-packages"},
     
     
     { dev .. "/cl/python", cl .. "/python", "recurse", {"kitten-me"} },
@@ -56,6 +57,7 @@ return {
   post = {
     -- [5]=true will move destination if it exists to /tmp/symlinks
    {config .. "/nvim/profiles.lua", home .. "/.config/nvim/profiles.lua", nil, nil, true},
+   { repos .. "/bin/qtile-rofi-keybindings/qtile_kb_rofi.sh", home .. "/bin/qtile_kb_rofi.sh" }
   },
 }
 

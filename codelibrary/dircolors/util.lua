@@ -15,10 +15,12 @@ function M.err_exit(self, msg)
   os.exit()
 end
 
-function M.self_map(self, t, cb)
-  -- a high order  map() like fn
-  for _, v in ipairs(t) do
-    cb(self, v)
-  end
-end
+-- function M.self_map(self, t, cb)
+--   -- a high order  map() like fn
+--   for _, v in ipairs(t) do
+--     cb(self, v)
+--   end
+-- end
+
+
 return M

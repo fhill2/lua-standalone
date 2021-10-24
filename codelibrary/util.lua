@@ -29,6 +29,22 @@ function util.create_file(opts)
 end
 end
 
+function util.recreate_write_file(opts)
+  if not opts then return end
+if uv.fs_stat(opts.dest) then 
+  uv.fs_unlink(opts.dest) 
+end
+  util.create_fp_dirs(opts.dest)
+  util.create_file({ dest = opts.dest})
+local fd = assert(uv.fs_open(opts.dest, "w", 438))
+
+uv.fs_write(fd, opts.data, function(error)
+      assert(not error, error)
+      assert(uv.fs_close(fd))
+    end)
+
+end
+
 
 function util.read_file_sync(path)
   local fd = assert(uv.fs_open(path, "r", 438))
